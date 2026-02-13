@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>∞ DANIEL &amp; HER ∞</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&amp;family=Inter:wght@300;400;600&amp;display=swap');
+
+        :root {
+            --her-name: "HER NAME"; /* ← CHANGE THIS */
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .title-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .hero {
+            background: radial-gradient(circle at center, #1a0033 0%, #000000 70%);
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 4s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .heart-particle {
+            position: absolute;
+            font-size: 20px;
+            color: #ff69b4;
+            pointer-events: none;
+            animation: floatHeart 8s linear forwards;
+            text-shadow: 0 0 10px #ff1493;
+        }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-800px) rotate(360deg); opacity: 0; }
+        }
+
+        .section-title {
+            background: linear-gradient(90deg, #ff69b4, #00ffff, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: #ff69b4;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .memory-card {
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .memory-card:hover {
+            transform: scale(1.08) rotate(2deg);
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+
+    <!-- PARTICLE CANVAS -->
+    <canvas id="bgCanvas" class="fixed inset-0 z-0 pointer-events-none"></canvas>
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/70 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-8 py-6 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-gradient-to-br from-pink-500 to-cyan-400 rounded-2xl flex items-center justify-center text-xl">❤️</div>
+                <div class="text-3xl font-bold tracking-tighter title-font">DANIEL &amp; <span id="her-name-nav" class="text-pink-400"></span></div>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-10 text-sm uppercase tracking-[3px] font-medium">
+                <a href="#journey" class="nav-link cursor-pointer hover:text-pink-400 transition-colors">JOURNEY</a>
+                <a href="#memories" class="nav-link cursor-pointer hover:text-pink-400 transition-colors">MEMORIES</a>
+                <a href="#crazy" class="nav-link cursor-pointer hover:text-pink-400 transition-colors">THE CRAZY</a>
+                <a href="#forever" class="nav-link cursor-pointer hover:text-pink-400 transition-colors">FOREVER</a>
+            </div>
+
+            <button onclick="launchRocket()" 
+                    class="px-8 py-3 bg-white text-black rounded-3xl font-semibold flex items-center gap-3 hover:bg-pink-400 hover:text-white transition-all group">
+                <span>LAUNCH LOVE</span>
+                <span class="text-xl group-active:rotate-45 transition">🚀</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero min-h-screen flex items-center relative overflow-hidden">
+        <!-- Background stars (CSS) -->
+        <div id="stars" class="absolute inset-0"></div>
+        
+        <div class="max-w-5xl mx-auto px-8 text-center relative z-10 pt-20">
+            <div class="mb-8 inline-flex items-center gap-4 bg-white/5 backdrop-blur-md px-8 py-3 rounded-3xl border border-white/10">
+                <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                <span class="text-xs uppercase tracking-widest font-mono">SIGNAL FROM THE UNIVERSE</span>
+            </div>
+            
+            <h1 class="text-[120px] md:text-[180px] leading-none font-light title-font tracking-[-4px] mb-6">
+                <span id="her-name-hero" class="block text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400"></span>
+            </h1>
+            
+            <p class="text-4xl md:text-6xl font-light max-w-2xl mx-auto leading-tight mb-16">
+                You didn't just steal my heart.<br>
+                <span class="text-pink-400">You hijacked the entire fucking galaxy.</span>
+            </p>
+            
+            <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+                <button onclick="scrollToSection('journey')" 
+                        class="group px-16 py-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-3xl text-2xl font-semibold flex items-center gap-4 hover:scale-110 transition-all duration-500">
+                    BEGIN THE MADNESS
+                    <span class="text-4xl group-hover:rotate-12 transition">🌌</span>
+                </button>
+                
+                <button onclick="showSecretMessage()" 
+                        class="px-16 py-8 border border-white/30 hover:border-pink-400 rounded-3xl text-xl font-medium transition-all duration-500 flex items-center gap-3">
+                    <span class="text-pink-400">❤️</span>
+                    SECRET FOR HER EYES ONLY
+                </button>
+            </div>
+        </div>
+
+        <!-- Scroll prompt -->
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 text-xs uppercase tracking-widest opacity-60">
+            <div>SCROLL FOR CHAOS</div>
+            <div class="w-px h-12 bg-gradient-to-b from-transparent via-white to-transparent"></div>
+        </div>
+
+        <!-- Floating hearts -->
+        <div id="floating-hearts" class="absolute inset-0 pointer-events-none"></div>
+    </section>
+
+    <!-- JOURNEY -->
+    <section id="journey" class="py-32 bg-black relative">
+        <div class="max-w-6xl mx-auto px-8">
+            <div class="text-center mb-20">
+                <div class="inline-block px-6 py-2 bg-white/5 text-pink-400 text-sm tracking-[4px] rounded-full mb-6">CHAPTER 01</div>
+                <h2 class="text-7xl title-font font-light">Our Insane Journey</h2>
+            </div>
+
+            <div class="grid md:grid-cols-12 gap-8">
+                <!-- Timeline -->
+                <div class="md:col-span-5 space-y-24">
+                    <div class="flex gap-8">
+                        <div class="w-14 h-14 shrink-0 bg-gradient-to-br from-pink-500 to-purple-500 rounded-2xl flex items-center justify-center text-3xl">1</div>
+                        <div>
+                            <div class="text-pink-400 text-sm tracking-widest mb-2">2023 • NAIROBI</div>
+                            <h3 class="text-4xl title-font">The day you looked at me</h3>
+                            <p class="text-gray-400 mt-4 leading-relaxed">I was just a guy. Then you smiled and the laws of physics broke. Gravity became optional.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-8">
+                        <div class="w-14 h-14 shrink-0 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl flex items-center justify-center text-3xl">2</div>
+                        <div>
+                            <div class="text-pink-400 text-sm tracking-widest mb-2">2024 • MOMBASA</div>
+                            <h3 class="text-4xl title-font">When you said yes</h3>
+                            <p class="text-gray-400 mt-4 leading-relaxed">To every stupid idea I had. To midnight drives. To loving me even when I was impossible.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual -->
+                <div class="md:col-span-7">
+                    <div class="bg-zinc-900 rounded-[3rem] p-2 shadow-2xl">
+                        <img id="journey-image" src="https://picsum.photos/id/1015/1200/800" 
+                             class="rounded-[2.5rem] w-full aspect-video object-cover" alt="Our moment">
+                    </div>
+                    <div class="text-center mt-6 text-xs uppercase tracking-widest text-gray-500">Replace this image with your favorite photo of her</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEMORIES -->
+    <section id="memories" class="py-32 bg-zinc-950">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="flex justify-between items-end mb-16">
+                <div>
+                    <div class="text-pink-400 text-sm tracking-widest">CHAPTER 02</div>
+                    <h2 class="text-7xl title-font font-light">Moments That Broke Reality</h2>
+                </div>
+                <button onclick="randomMemory()" 
+                        class="px-10 py-4 border border-pink-400/30 hover:border-pink-400 rounded-2xl flex items-center gap-3 text-sm uppercase tracking-widest">
+                    <span>SURPRISE ME</span>
+                    <span class="text-xl">🎲</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="memory-grid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- THE CRAZY -->
+    <section id="crazy" class="py-32 relative overflow-hidden bg-black">
+        <div class="max-w-4xl mx-auto px-8 text-center">
+            <div class="mb-20">
+                <div class="text-8xl mb-6">🤯</div>
+                <h2 class="text-7xl title-font font-light">The Parts That Make People Think We're Insane</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div onclick="triggerCrazy(1)" class="group cursor-pointer">
+                    <div class="text-6xl mb-6 transition group-hover:scale-125">🌊</div>
+                    <h3 class="text-3xl mb-3">Midnight Ocean Dips</h3>
+                    <p class="text-gray-400">Because clothes are overrated and you look better wet anyway.</p>
+                </div>
+                <div onclick="triggerCrazy(2)" class="group cursor-pointer">
+                    <div class="text-6xl mb-6 transition group-hover:scale-125">🍕</div>
+                    <h3 class="text-3xl mb-3">3AM Pizza Runs</h3>
+                    <p class="text-gray-400">Arguing about pineapple while the city sleeps. Best arguments of my life.</p>
+                </div>
+                <div onclick="triggerCrazy(3)" class="group cursor-pointer">
+                    <div class="text-6xl mb-6 transition group-hover:scale-125">🎤</div>
+                    <h3 class="text-3xl mb-3">Karaoke Disasters</h3>
+                    <p class="text-gray-400">You singing off-key is still the most beautiful sound I've ever heard.</p>
+                </div>
+            </div>
+
+            <div class="mt-24">
+                <button onclick="unleashChaos()" 
+                        class="w-full py-8 text-4xl font-bold border-4 border-dashed border-pink-400 rounded-3xl hover:bg-pink-400 hover:text-black transition-all">
+                    UNLEASH THE FULL CHAOS
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOREVER -->
+    <section id="forever" class="py-32 bg-gradient-to-b from-black to-zinc-950">
+        <div class="max-w-3xl mx-auto px-8 text-center">
+            <div class="mb-12">
+                <span class="text-5xl">∞</span>
+            </div>
+            <h2 class="text-6xl title-font leading-none mb-12">To the girl who turned my life into the best sci-fi movie ever</h2>
+            
+            <div id="love-letter" class="text-left bg-white/5 p-12 rounded-3xl border border-white/10 text-lg leading-relaxed">
+                <!-- Filled by JS -->
+            </div>
+
+            <div class="mt-16 flex justify-center">
+                <div onclick="heartExplosion()" class="cursor-pointer text-8xl hover:scale-150 transition">❤️</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-12 border-t border-white/10 text-center text-xs text-gray-500">
+        <p>Made with pure madness and 1000% love by Daniel • Hosted on GitHub because normal websites are boring</p>
+        <p class="mt-3">Click the heart 7 times for a surprise →</p>
+    </footer>
+
+    <!-- MODAL -->
+    <div id="modal" class="fixed inset-0 bg-black/90 hidden flex items-center justify-center z-[100]">
+        <div class="max-w-lg w-full mx-4 bg-zinc-900 rounded-3xl overflow-hidden">
+            <div id="modal-content" class="p-10"></div>
+            <button onclick="closeModal()" 
+                    class="absolute top-6 right-6 text-4xl text-white/50 hover:text-white">×</button>
+        </div>
+    </div>
+
+    <script>
+        // ============== PERSONALIZATION ==============
+        const herName = "FLAVIAN"; // ← CHANGE THIS TO HER NAME
+        document.getElementById('her-name-nav').textContent = herName;
+        document.getElementById('her-name-hero').textContent = herName;
+
+        // ============== PARTICLES BACKGROUND ==============
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let particles = [];
+        
+        class Star {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speed = Math.random() * 0.3 + 0.1;
+                this.opacity = Math.random() * 0.8 + 0.2;
+            }
+            update() {
+                this.y += this.speed;
+                if (this.y > canvas.height) this.reset();
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        function createStars() {
+            particles = [];
+            for (let i = 0; i < 400; i++) {
+                particles.push(new Star());
+            }
+        }
+        
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let star of particles) {
+                star.update();
+                star.draw();
+            }
+            requestAnimationFrame(animateStars);
+        }
+        
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            createStars();
+        });
+        
+        // ============== FLOATING HEARTS ==============
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart-particle';
+            heart.textContent = ['❤️','💖','💗','💓'][Math.floor(Math.random()*4)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.bottom = '-50px';
+            heart.style.animationDuration = (Math.random() * 6 + 7) + 's';
+            document.getElementById('floating-hearts').appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 15000);
+        }
+        
+        // ============== MEMORY GRID ==============
+        const memories = [
+            {
+                img: "https://picsum.photos/id/1015/800/800",
+                title: "First Kiss",
+                desc: "Under the stars in Diani. You tasted like mango and forever."
+            },
+            {
+                img: "https://picsum.photos/id/201/800/800",
+                title: "That One Fight",
+                desc: "We both cried then laughed then made up for 4 hours straight."
+            },
+            {
+                img: "https://picsum.photos/id/301/800/800",
+                title: "Your Laugh",
+                desc: "The one that makes me weak. Still does."
+            },
+            {
+                img: "https://picsum.photos/id/401/800/800",
+                title: "Rainy Day",
+                desc: "We stayed in bed and watched the world end outside."
+            },
+            {
+                img: "https://picsum.photos/id/501/800/800",
+                title: "Your Eyes",
+                desc: "They still make me forget what I was saying."
+            },
+            {
+                img: "https://picsum.photos/id/601/800/800",
+                title: "You Dancing",
+                desc: "Badly. Beautifully. Mine."
+            }
+        ];
+        
+        function populateMemories() {
+            const grid = document.getElementById('memory-grid');
+            grid.innerHTML = '';
+            
+            memories.forEach((mem, i) => {
+                const card = document.createElement('div');
+                card.className = `memory-card bg-zinc-900 rounded-3xl overflow-hidden cursor-pointer group`;
+                card.innerHTML = `
+                    <div class="relative">
+                        <img src="${mem.img}" class="w-full h-80 object-cover transition group-hover:scale-110 duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-8">
+                            <div class="text-pink-400 text-xs tracking-widest mb-2">${mem.title}</div>
+                            <div class="text-2xl title-font leading-tight">${mem.desc}</div>
+                        </div>
+                    </div>
+                `;
+                card.onclick = () => showMemoryModal(mem);
+                grid.appendChild(card);
+            });
+        }
+        
+        function showMemoryModal(mem) {
+            const modal = document.getElementById('modal');
+            const content = document.getElementById('modal-content');
+            content.innerHTML = `
+                <img src="${mem.img}" class="w-full rounded-2xl mb-8">
+                <div class="text-4xl title-font mb-4">${mem.title}</div>
+                <div class="text-xl text-gray-300 leading-relaxed">${mem.desc}</div>
+            `;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        
+        function randomMemory() {
+            const random = memories[Math.floor(Math.random() * memories.length)];
+            showMemoryModal(random);
+        }
+        
+        // ============== CRAZY TRIGGERS ==============
+        function triggerCrazy(n) {
+            if (n === 1) {
+                alert("🌊 YOU'RE NOW IN OCEAN MODE. Everything is wet and romantic.");
+            } else if (n === 2) {
+                alert("🍕 PIZZA RAIN ACTIVATED. Enjoy the grease.");
+            } else if (n === 3) {
+                alert("🎤 KARAOKE CHAOS UNLOCKED. Sing with me, baby.");
+            }
+            createFloatingHeart();
+            createFloatingHeart();
+            createFloatingHeart();
+        }
+        
+        function unleashChaos() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    createFloatingHeart();
+                }, i * 60);
+            }
+            alert("💥 FULL CHAOS MODE ACTIVATED\n\nShe will never recover from this website.");
+        }
+        
+        // ============== ROCKET LAUNCH ==============
+        function launchRocket() {
+            const rocket = document.createElement('div');
+            rocket.style.position = 'fixed';
+            rocket.style.bottom = '-100px';
+            rocket.style.left = '50%';
+            rocket.style.fontSize = '80px';
+            rocket.style.transition = 'all 3s cubic-bezier(0.25, 0.1, 0.25, 1)';
+            rocket.style.zIndex = '9999';
+            rocket.textContent = '🚀';
+            document.body.appendChild(rocket);
+            
+            setTimeout(() => {
+                rocket.style.bottom = '120vh';
+                rocket.style.transform = 'rotate(-45deg) scale(0.3)';
+            }, 50);
+            
+            setTimeout(() => {
+                rocket.remove();
+                heartExplosion();
+            }, 3200);
+        }
+        
+        // ============== HEART EXPLOSION ==============
+        function heartExplosion() {
+            for (let i = 0; i < 80; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart-particle';
+                    heart.textContent = '❤️';
+                    heart.style.left = Math.random() * window.innerWidth + 'px';
+                    heart.style.bottom = '100px';
+                    heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                    document.getElementById('floating-hearts').appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 8000);
+                }, i * 8);
+            }
+        }
+        
+        // ============== LOVE LETTER ==============
+        const letterText = `My dearest ${herName},
+
+I still can't believe you're real.
+
+Every time I look at you, I feel like the universe personally conspired to give me the greatest gift in existence.
+
+You make the impossible feel normal. You make ordinary days feel like blockbusters. You make me want to be better not just for you, but because of you.
+
+Thank you for choosing this crazy, chaotic, beautiful life with me.
+
+I will love you until the last star burns out... and then I'll find a way to love you in the dark too.
+
+Forever isn't long enough.
+
+Daniel`;
+
+        function typeLetter() {
+            const el = document.getElementById('love-letter');
+            el.innerHTML = '';
+            let i = 0;
+            const type = setInterval(() => {
+                el.innerHTML += letterText[i];
+                i++;
+                if (i >= letterText.length) {
+                    clearInterval(type);
+                }
+            }, 30);
+        }
+        
+        // ============== SECRET MESSAGE ==============
+        function showSecretMessage() {
+            const messages = [
+                "You are my favorite notification.",
+                "I would fight a thousand black holes for you.",
+                "Even in my next life, I'm choosing you first.",
+                "You make my heart do things physics can't explain."
+            ];
+            const random = messages[Math.floor(Math.random() * messages.length)];
+            
+            const modal = document.getElementById('modal');
+            const content = document.getElementById('modal-content');
+            content.innerHTML = `
+                <div class="text-center">
+                    <div class="text-8xl mb-10">💌</div>
+                    <div class="text-3xl leading-snug title-font">${random}</div>
+                    <div class="mt-12 text-pink-400 text-sm">— from the guy who is completely obsessed with you</div>
+                </div>
+            `;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        
+        // ============== SCROLL TO SECTION ==============
+        function scrollToSection(section) {
+            document.getElementById(section).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+        
+        // ============== KEYBOARD EASTER EGG ==============
+        let konami = '';
+        document.addEventListener('keydown', (e) => {
+            konami += e.key;
+            if (konami.length > 10) konami = konami.slice(-10);
+            
+            if (konami.includes('iloveyou')) {
+                heartExplosion();
+                alert("❤️ YOU FOUND THE LOVE CODE\n\nShe is now officially the luckiest girl alive.");
+                konami = '';
+            }
+        });
+        
+        // ============== CLICK HEART IN FOOTER 7 TIMES ==============
+        let heartClicks = 0;
+        document.addEventListener('click', (e) => {
+            if (e.target.textContent === '❤️' && e.target.closest('footer')) {
+                heartClicks++;
+                if (heartClicks === 7) {
+                    unleashChaos();
+                    heartClicks = 0;
+                }
+            }
+        });
+        
+        // ============== INIT ==============
+        window.onload = () => {
+            resizeCanvas();
+            createStars();
+            animateStars();
+            
+            // Start floating hearts
+            setInterval(() => {
+                if (Math.random() > 0.4) createFloatingHeart();
+            }, 800);
+            
+            populateMemories();
+            typeLetter();
+            
+            // Random shooting star every 8 seconds
+            setInterval(() => {
+                if (Math.random() > 0.6) {
+                    const star = document.createElement('div');
+                    star.style.position = 'fixed';
+                    star.style.top = Math.random() * 40 + '%';
+                    star.style.left = '-50px';
+                    star.style.width = '120px';
+                    star.style.height = '2px';
+                    star.style.background = 'linear-gradient(90deg, transparent, #fff, transparent)';
+                    star.style.opacity = '0.8';
+                    star.style.transform = 'rotate(25deg)';
+                    document.body.appendChild(star);
+                    
+                    setTimeout(() => {
+                        star.style.transition = 'all 1.2s linear';
+                        star.style.left = '120vw';
+                    }, 100);
+                    
+                    setTimeout(() => star.remove(), 2000);
+                }
+            }, 8000);
+            
+            // Welcome message after 2 seconds
+            setTimeout(() => {
+                console.log("%cWelcome to the most dangerous love website on the internet.", "color: #ff69b4; font-size: 14px; font-family: monospace");
+            }, 2000);
+        };
+    </script>
+</body>
+</html>
