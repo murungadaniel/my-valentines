@@ -87,7 +87,7 @@
         }
     </style>
 </head>
-<body class="bg-black text-white">
+<body class="bg-black text-white min-h-screen overflow-x-hidden">
 
     <!-- PARTICLE CANVAS -->
     <canvas id="bgCanvas" class="fixed inset-0 z-0 pointer-events-none"></canvas>
@@ -126,7 +126,7 @@
                 <span class="text-xs uppercase tracking-widest font-mono">SIGNAL FROM THE UNIVERSE</span>
             </div>
             
-            <h1 class="text-[120px] md:text-[180px] leading-none font-light title-font tracking-[-4px] mb-6">
+            <h1 class="text-6xl sm:text-8xl md:text-[120px] lg:text-[180px] leading-none font-light title-font tracking-[-4px] mb-6">
                 <span id="her-name-hero" class="block text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400"></span>
             </h1>
             
@@ -137,9 +137,9 @@
             
             <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
                 <button onclick="scrollToSection('journey')" 
-                        class="group px-16 py-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-3xl text-2xl font-semibold flex items-center gap-4 hover:scale-110 transition-all duration-500">
+                    class="group px-10 sm:px-16 py-6 sm:py-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-3xl text-xl sm:text-2xl font-semibold flex items-center gap-4 hover:scale-110 transition-all duration-500">
                     BEGIN THE MADNESS
-                    <span class="text-4xl group-hover:rotate-12 transition">🌌</span>
+                    <span class="text-3xl sm:text-4xl group-hover:rotate-12 transition">🌌</span>
                 </button>
                 
                 <button onclick="showSecretMessage()" 
